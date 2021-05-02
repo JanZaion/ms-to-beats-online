@@ -2,28 +2,35 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import BPMinput from './components/BPMinput';
 import TimeDisplay from './components/TimeDisplay';
-import Slider from './components/Slider';
+import BeatSlider from './components/BeatSlider';
 
 const MsToBeats = () => {
-  const [ BPM, setBPM ] = useState(120);
-  const oneMinute = 60000 / BPM;
+  const [BPM, setBPM] = useState(120);
+  const [oneBeat, setOneBeat] = useState(60000 / BPM);
 
   const changeBPM = (e) => {
     setBPM(e.target.value);
   };
 
+  useEffect(() => {
+    setOneBeat(60000 / BPM);
+  }, [BPM]);
+
   return (
     <div>
       <BPMinput BPM={BPM} onChange={changeBPM} />
-      <TimeDisplay oneMinute={oneMinute} divider={1} multiplier={4} noteLength='1 bar'/>
-      <TimeDisplay oneMinute={oneMinute} divider={1} multiplier={2} noteLength='1/2'/>
-      <TimeDisplay oneMinute={oneMinute} divider={1} multiplier={1} noteLength='1/4'/>
-      <TimeDisplay oneMinute={oneMinute} divider={2} multiplier={1} noteLength='1/8'/>
-      <TimeDisplay oneMinute={oneMinute} divider={4} multiplier={1} noteLength='1/16'/>
-      <TimeDisplay oneMinute={oneMinute} divider={8} multiplier={1} noteLength='1/32'/>
-      <TimeDisplay oneMinute={oneMinute} divider={16} multiplier={1} noteLength='1/64'/>
-      <TimeDisplay oneMinute={oneMinute} divider={32} multiplier={1} noteLength='1/128'/>
-      <Slider oneMinute={oneMinute}/>
+      <TimeDisplay oneBeat={oneBeat} divider={1} multiplier={4} noteLength="1 bar" />
+      <TimeDisplay oneBeat={oneBeat} divider={1} multiplier={2} noteLength="1/2" />
+      <TimeDisplay oneBeat={oneBeat} divider={1} multiplier={1} noteLength="1/4" />
+      <TimeDisplay oneBeat={oneBeat} divider={2} multiplier={1} noteLength="1/8" />
+      <TimeDisplay oneBeat={oneBeat} divider={4} multiplier={1} noteLength="1/16" />
+      <TimeDisplay oneBeat={oneBeat} divider={8} multiplier={1} noteLength="1/32" />
+      <TimeDisplay oneBeat={oneBeat} divider={16} multiplier={1} noteLength="1/64" />
+      <TimeDisplay oneBeat={oneBeat} divider={32} multiplier={1} noteLength="1/128" />
+      <BeatSlider oneBeat={oneBeat} BPM={BPM} min={0.01} max={1} step={0.01} unit="ms" />
+      <BeatSlider oneBeat={oneBeat} BPM={BPM} min={1} max={100} step={0.01} unit="ms" />
+      <BeatSlider oneBeat={oneBeat} BPM={BPM} min={100} max={1000} step={0.1} unit="ms" />
+      <BeatSlider oneBeat={oneBeat} BPM={BPM} min={1000} max={10000} step={1} unit="ms" />
     </div>
   );
 };
