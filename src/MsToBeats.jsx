@@ -1,8 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import BPMinput from './components/BPMinput';
 import TimeDisplay from './components/TimeDisplay';
 import BeatSlider from './components/BeatSlider';
+import Metronome from './components/Metronome';
+import * as Tone from 'tone';
+
+const MembraneSynth = new Tone.MembraneSynth({
+  pitchDecay: 0.01,
+  octaves: 10,
+  oscillator: {
+    type: 'sine',
+  },
+  envelope: {
+    attack: 0.001,
+    decay: 0.4,
+    sustain: 0.01,
+    release: 1.4,
+    attackCurve: 'linear',
+  },
+}).toDestination();
 
 const MsToBeats = () => {
   const [BPM, setBPM] = useState(120);
@@ -19,6 +36,7 @@ const MsToBeats = () => {
   return (
     <div>
       <BPMinput BPM={BPM} onChange={changeBPM} />
+      <Metronome BPM={BPM} MembraneSynth={MembraneSynth} />
       <TimeDisplay oneBeat={oneBeat} divider={1} multiplier={4} noteLength="1 bar" />
       <TimeDisplay oneBeat={oneBeat} divider={1} multiplier={2} noteLength="1/2" />
       <TimeDisplay oneBeat={oneBeat} divider={1} multiplier={1} noteLength="1/4" />
