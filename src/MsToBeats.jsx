@@ -34,7 +34,7 @@ const MsToBeats = () => {
   }, [BPM]);
 
   return (
-    <div>
+    <div className='App'>
       <BPMinput BPM={BPM} onChange={changeBPM} />
       <Metronome BPM={BPM} MembraneSynth={MembraneSynth} />
       <TimeDisplay oneBeat={oneBeat} divider={1} multiplier={4} noteLength="1 bar" />
